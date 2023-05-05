@@ -32,7 +32,32 @@ def fetch_todo() -> dict:
     Returns:
         None
 """
+import  psycopg2
 
+conn = psycopg2.connect(
+    host="dpg-chab8bak728r8808t55g-a.oregon-postgres.render.com",
+    database="todo_s9qc",
+    user="root",
+    password="B3XJaRhZvqmIkcUcfiOY41IcK2wsT4A7"
+    )
+
+# Create a cursor object to interact with the database
+cur = conn.cursor()
+
+# Update the task description for the given task_id
+task_id = 1
+new_description = "This is the updated task description."
+sql = f"UPDATE tasks SET description = '{new_description}' WHERE id = {task_id};"
+
+# Execute the SQL query
+cur.execute(sql)
+
+# Commit the changes to the database
+conn.commit()
+
+# Close the cursor and database connection
+cur.close()
+conn.close()
 
 def update_task_entry(task_id: int , text: str):
     cursor = postgres.cursor()
